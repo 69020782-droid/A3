@@ -3,25 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ระบบบริหารจัดการอาหารสุนัข — Wireframe HTML (1.618 · 9 ช่อง · Poka-Yoke)</title>
-    <meta name="description" content="เว็บแอปพลิเคชันและโค้ด HTML สำหรับบริหารจัดการและจ่ายอาหารสุนัขอัตโนมัติ พร้อมแบบจำลองปริมาณอาหารคงเหลือ" />
+    <title>ระบบบริหารจัดการอาหารสุนัข — Wireframe HTML (1.618 · Poka-Yoke)</title>
+    <meta name="description" content="เว็บแอปพลิเคชัน HTML สำหรับบริหารจัดการและจ่ายอาหารสุนัขอัตโนมัติ พร้อมแบบจำลองปริมาณอาหารคงเหลือ" />
     <meta property="og:title" content="ระบบบริหารจัดการอาหารสุนัข — Wireframe HTML" />
-    <meta property="og:description" content="เว็บแอปพลิเคชันและโค้ด HTML สำหรับบริหารจัดการและจ่ายอาหารสุนัขอัตโนมัติ พร้อมแบบจำลองปริมาณอาหารคงเหลือ" />
+    <meta property="og:description" content="เว็บแอปพลิเคชัน HTML สำหรับบริหารจัดการและจ่ายอาหารสุนัขอัตโนมัติ พร้อมแบบจำลองปริมาณอาหารคงเหลือ" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Prompt:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-      /* โครงสร้างขาว-ดำ (ไม่ใช้สี) ตามสัดส่วนทองคำ 1.618 */
+      /* โครงสร้างขาว-ดำ (ไม่ใช้สี) เต็มหน้าเว็บ ตามสัดส่วนทองคำ 1.618 */
       :root {
         --phi: 1.618;
-        --bg-page: #f4f4f4;
-        --bg-canvas: #ffffff;
+        --bg-page: #ffffff;
         --bg-surface: #fafafa;
-        --bg-muted: #e5e5e5;
+        --bg-muted: #f2f2f2;
         --border-strong: #171717;
-        --border-subtle: #bdbdbd;
+        --border-subtle: #c7c7c7;
         --text-main: #171717;
         --text-sub: #525252;
         --space-xs: 10px;
@@ -36,6 +35,10 @@
         padding: 0;
       }
 
+      html, body {
+        height: 100%;
+      }
+
       body {
         font-family: 'Sarabun', sans-serif;
         background: var(--bg-page);
@@ -43,139 +46,223 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-sm);
-        gap: var(--space-sm);
       }
 
       h1, h2, h3, button {
         font-family: 'Prompt', sans-serif;
       }
 
-      .toolbar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        justify-content: center;
-        max-width: 631px;
+      /* Full-Width 3-Zone Top Bar */
+      .topbar {
+        width: 100%;
+        border-bottom: 2px solid var(--border-strong);
+        background: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 30;
       }
 
-      .tool-btn {
-        font-size: 12px;
+      .topbar-inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        font-family: 'Prompt', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-main);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .nav-tab {
+        font-size: 13px;
         font-weight: 500;
-        padding: 8px 12px;
-        min-height: 38px;
+        padding: 8px 14px;
+        min-height: 40px;
+        background: #ffffff;
+        color: #171717;
+        border: 1px solid transparent;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .nav-tab:hover {
+        border-color: #171717;
+      }
+
+      .nav-tab.active {
+        background: #171717;
+        color: #ffffff;
+        border-color: #171717;
+      }
+
+      .topbar-action {
+        font-size: 13px;
+        font-weight: 500;
+        padding: 8px 16px;
+        min-height: 40px;
         background: #ffffff;
         color: #171717;
         border: 1.5px solid #171717;
         cursor: pointer;
+        white-space: nowrap;
       }
 
-      .tool-btn.active {
-        background: #171717;
-        color: #ffffff;
+      .topbar-action:hover {
+        background: #f2f2f2;
       }
 
-      /* กรอบหน้าจอมือถือ สัดส่วน 1 : 1.618 (390px x 631px) */
-      .phone-frame {
-        width: 390px;
-        max-width: 100%;
-        height: 631px;
-        background: var(--bg-canvas);
-        border: 2px solid var(--border-strong);
+      /* Full-Viewport Main Content */
+      .page-main {
+        flex: 1;
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: var(--space-lg) var(--space-md);
         display: flex;
         flex-direction: column;
-        position: relative;
-        overflow: hidden;
       }
 
-      /* Top Header */
-      .app-header {
-        height: 52px;
-        background: #ffffff;
-        border-bottom: 2px solid #171717;
-        display: grid;
-        grid-template-columns: 48px 1fr 48px;
-        align-items: center;
-        text-align: center;
-        flex-shrink: 0;
-        font-size: 16px;
-        font-weight: 600;
-        z-index: 10;
-      }
-
-      .back-btn {
-        width: 44px;
-        height: 44px;
-        margin-left: 2px;
-        background: transparent;
-        border: 1px solid transparent;
-        font-size: 20px;
-        cursor: pointer;
-      }
-
-      .back-btn:hover {
-        border-color: #171717;
-      }
-
-      /* Screens */
       .screen {
         display: none;
         flex: 1;
         flex-direction: column;
-        overflow-y: auto;
+        gap: var(--space-md);
       }
 
       .screen.active {
         display: flex;
       }
 
-      .stage-9 {
+      /* Screen Header Row */
+      .screen-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-sm);
+        padding-bottom: var(--space-sm);
+        border-bottom: 1.5px solid var(--border-strong);
+      }
+
+      .screen-head-left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+      }
+
+      .screen-title {
+        font-size: 26px; /* 16 * 1.618 ≈ 26px */
+        font-weight: 600;
+      }
+
+      .back-btn {
+        min-width: 44px;
+        min-height: 44px;
+        background: #ffffff;
+        border: 1.5px solid #171717;
+        font-size: 18px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .back-btn:hover {
+        background: #f2f2f2;
+      }
+
+      /* 1.618 Golden Ratio Split Layout */
+      .phi-grid {
+        display: grid;
+        grid-template-columns: 1.618fr 1fr;
+        gap: var(--space-md);
+        align-items: start;
+        flex: 1;
+      }
+
+      .phi-grid-equal {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+        align-items: start;
+      }
+
+      @media (max-width: 900px) {
+        .phi-grid,
+        .phi-grid-equal {
+          grid-template-columns: 1fr;
+        }
+        .page-main {
+          padding: var(--space-md) var(--space-sm);
+        }
+        .topbar-inner {
+          padding: 10px var(--space-sm);
+        }
+      }
+
+      /* Welcome Fullscreen Stage */
+      .welcome-stage {
         flex: 1;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
         grid-template-rows: auto 1fr auto;
-        gap: var(--space-xs);
-        padding: var(--space-sm);
+        gap: var(--space-md);
+        min-height: calc(100vh - 160px);
       }
 
-      .span-3 {
-        grid-column: 1 / -1;
-      }
-
-      .center-focus {
-        grid-column: 1 / -1;
+      .welcome-center {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
         gap: var(--space-md);
+        border: 1.5px solid #171717;
+        background: var(--bg-surface);
+        padding: var(--space-lg);
       }
 
-      /* Wireframe Elements */
+      .welcome-center h1 {
+        font-size: clamp(26px, 3.2vw, 42px); /* 16 * 1.618^2 ≈ 42px */
+        font-weight: 600;
+      }
+
+      /* Wireframe Cards & Inputs */
       .wf-box {
         border: 1px dashed #737373;
         background: #f5f5f5;
-        padding: 12px;
+        padding: var(--space-md);
         text-align: center;
-        font-size: 12px;
+        font-size: 14px;
         color: #525252;
       }
 
       .wf-card {
         border: 1.5px solid #171717;
         background: var(--bg-surface);
-        margin-bottom: var(--space-xs);
+        width: 100%;
       }
 
       .wf-card-head {
         background: #ebebeb;
         border-bottom: 1.5px solid #171717;
-        padding: 10px 14px;
-        text-align: center;
-        font-size: 14px;
+        padding: 14px 18px;
+        font-size: 16px;
         font-weight: 600;
       }
 
@@ -183,10 +270,11 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 14px;
-        min-height: 44px;
+        padding: 14px 18px;
+        min-height: 54px;
         border-bottom: 1px solid var(--border-subtle);
-        font-size: 14px;
+        font-size: 16px;
+        gap: var(--space-sm);
       }
 
       .wf-row:last-child {
@@ -194,31 +282,44 @@
       }
 
       .wf-input, .wf-select {
-        border: 1px solid #737373;
+        border: 1.5px solid #525252;
         background: #ffffff;
         color: #171717;
-        padding: 6px 8px;
+        padding: 8px 12px;
         font-family: inherit;
-        font-size: 14px;
-        min-height: 36px;
+        font-size: 15px;
+        min-height: 42px;
         font-variant-numeric: tabular-nums;
+      }
+
+      .wf-input:focus, .wf-select:focus {
+        outline: 2px solid #171717;
+        outline-offset: 1px;
       }
 
       .wf-btn {
         width: 100%;
-        min-height: 44px;
-        padding: 10px 16px;
+        min-height: 48px;
+        padding: 12px 24px;
         border: 2px solid #171717;
         background: #171717;
         color: #ffffff;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 500;
         cursor: pointer;
+      }
+
+      .wf-btn:hover:not(:disabled) {
+        background: #333333;
       }
 
       .wf-btn.outline {
         background: #ffffff;
         color: #171717;
+      }
+
+      .wf-btn.outline:hover:not(:disabled) {
+        background: #f2f2f2;
       }
 
       .wf-btn:disabled {
@@ -231,25 +332,34 @@
       .btn-pair-phi {
         display: grid;
         grid-template-columns: 1.618fr 1fr;
-        gap: var(--space-xs);
+        gap: var(--space-sm);
       }
 
       .poka-box {
         border: 1.5px dashed #171717;
         background: #f5f5f5;
-        padding: 10px 12px;
-        font-size: 12px;
-        line-height: 1.45;
-        margin-bottom: var(--space-xs);
+        padding: 14px 16px;
+        font-size: 14px;
+        line-height: 1.5;
       }
 
-      /* Hopper 1.618 Model (Monochrome diagonal stripes) */
+      /* Hopper 1.618 Model (Monochrome diagonal stripes, scaled for full web) */
+      .hopper-panel {
+        border: 1.5px solid #171717;
+        background: var(--bg-surface);
+        padding: var(--space-md);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
       .hopper-tank {
-        width: 228px;
-        height: 141px; /* 228 / 141 = 1.617 */
+        width: 340px;
+        max-width: 100%;
+        height: 210px; /* 340 / 210 = 1.619 */
         border: 2px solid #171717;
-        margin: 0 auto var(--space-xs);
-        padding: 8px;
+        padding: 12px;
         display: flex;
         flex-direction: column;
         background: #ffffff;
@@ -268,64 +378,33 @@
         background: repeating-linear-gradient(
           -45deg,
           #171717,
-          #171717 6px,
-          #525252 6px,
-          #525252 10px
+          #171717 8px,
+          #525252 8px,
+          #525252 14px
         );
         transition: height 0.25s ease;
       }
 
       .chute-tube {
-        width: 62px;
-        height: 100px; /* 100 / 62 = 1.613 */
+        width: 84px;
+        height: 136px; /* 136 / 84 = 1.619 */
         border: 2px solid #171717;
-        margin: 0 auto;
-        padding: 6px;
+        padding: 8px;
         display: flex;
         flex-direction: column;
         background: #ffffff;
       }
 
-      /* Bottom Nav */
-      .bottom-nav {
-        height: 58px;
-        background: #ffffff;
-        border-top: 2px solid #171717;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        flex-shrink: 0;
-        z-index: 10;
-      }
-
-      .nav-item {
-        border: none;
-        border-right: 1px solid #e5e5e5;
-        background: #ffffff;
-        color: #525252;
-        font-size: 11px;
-        font-weight: 500;
-        cursor: pointer;
-      }
-
-      .nav-item:last-child {
-        border-right: none;
-      }
-
-      .nav-item.active {
-        background: #171717;
-        color: #ffffff;
-      }
-
       /* Modal & Toast */
       .modal-backdrop {
-        position: absolute;
+        position: fixed;
         inset: 0;
         background: rgba(23, 23, 23, 0.55);
         display: none;
         align-items: center;
         justify-content: center;
-        padding: var(--space-sm);
-        z-index: 50;
+        padding: var(--space-md);
+        z-index: 60;
       }
 
       .modal-backdrop.open {
@@ -336,25 +415,25 @@
         background: #ffffff;
         border: 2px solid #171717;
         width: 100%;
-        max-height: 82%;
+        max-width: 560px;
+        max-height: 82vh;
         overflow-y: auto;
-        padding: var(--space-sm);
+        padding: var(--space-md);
       }
 
       .toast {
-        position: absolute;
-        top: 58px;
-        left: 50%;
-        transform: translateX(-50%);
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
         background: #171717;
         color: #ffffff;
-        padding: 8px 14px;
-        font-size: 12px;
+        padding: 12px 20px;
+        font-size: 14px;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.2s ease;
-        z-index: 60;
-        white-space: nowrap;
+        z-index: 70;
+        border: 1.5px solid #171717;
       }
 
       .toast.show {
@@ -363,42 +442,47 @@
     </style>
   </head>
   <body>
-    <div class="toolbar">
-      <button class="tool-btn" onclick="go('welcome')">ภาพ 5(ก) หน้าแรก</button>
-      <button class="tool-btn" onclick="go('select')">ภาพ 5(ข) เลือกข้อมูล</button>
-      <button class="tool-btn" onclick="go('home')">ภาพ 6(ก) หน้าหลัก</button>
-      <button class="tool-btn" onclick="go('edit')">ภาพ 6(ข) แก้ไข</button>
-      <button class="tool-btn" onclick="go('dispense')">ภาพ 7(ก) จ่ายอาหาร</button>
-      <button class="tool-btn" onclick="go('check')">ภาพ 7(ข) ตรวจสอบ</button>
-    </div>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <span class="brand">ระบบบริหารจัดการอาหารสุนัข</span>
+        <nav class="nav-links" aria-label="เมนูหลัก">
+          <button class="nav-tab active" data-tab="welcome" onclick="go('welcome')">หน้าแรก</button>
+          <button class="nav-tab" data-tab="select" onclick="go('select')">เลือกข้อมูลสุนัข</button>
+          <button class="nav-tab" data-tab="home" onclick="go('home')">หน้าหลัก</button>
+          <button class="nav-tab" data-tab="dispense" onclick="go('dispense')">จ่ายอาหาร</button>
+          <button class="nav-tab" data-tab="check" onclick="go('check')">ตรวจสอบอาหาร</button>
+          <button class="nav-tab" data-tab="camera" onclick="go('camera')">กล้อง</button>
+        </nav>
+        <button class="topbar-action" onclick="openHistory()">ประวัติการจ่ายอาหาร</button>
+      </div>
+    </header>
 
-    <main class="phone-frame">
-      <div id="toast" class="toast" role="status">แจ้งเตือน</div>
+    <div id="toast" class="toast" role="status">แจ้งเตือน</div>
 
+    <main class="page-main">
       <!-- ภาพ 5 (ก): หน้าแรก -->
       <section id="s-welcome" class="screen active">
-        <div class="stage-9">
-          <div class="span-3 wf-box">พื้นที่ภาพประกอบด้านบน</div>
-          <div class="center-focus">
-            <h1 style="font-size:22px;font-weight:600;">ยินดีต้อนรับเข้าสู่แอปพลิเคชัน</h1>
-            <button class="wf-btn" style="width:162px;" onclick="go('select')">เริ่ม</button>
+        <div class="welcome-stage">
+          <div class="wf-box">พื้นที่ภาพประกอบด้านบน</div>
+          <div class="welcome-center">
+            <h1>ยินดีต้อนรับเข้าสู่แอปพลิเคชัน</h1>
+            <button class="wf-btn" style="width:220px;" onclick="go('select')">เริ่ม</button>
           </div>
-          <div class="span-3 wf-box">พื้นที่ภาพประกอบสุนัขเกาะรั้ว</div>
+          <div class="wf-box">พื้นที่ภาพประกอบสุนัขเกาะรั้ว</div>
         </div>
       </section>
 
       <!-- ภาพ 5 (ข): เลือกข้อมูลสุนัข -->
       <section id="s-select" class="screen">
-        <header class="app-header">
-          <button class="back-btn" onclick="go('welcome')" aria-label="ย้อนกลับ">&#8592;</button>
-          <span>เลือกข้อมูลสุนัข</span>
-          <span></span>
-        </header>
-        <div class="stage-9">
-          <div class="span-3">
-            <div class="poka-box">
-              <strong>Poka-Yoke:</strong> บังคับช่วงอาหาร 50–2,500 กรัม และเวลา 00–23 น. / 00–59 นาที ป้องกันค่าผิดพลาด
-            </div>
+        <div class="screen-head">
+          <div class="screen-head-left">
+            <button class="back-btn" onclick="go('welcome')" aria-label="ย้อนกลับ">&#8592;</button>
+            <h1 class="screen-title">เลือกข้อมูลสุนัข</h1>
+          </div>
+        </div>
+
+        <div class="phi-grid">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div class="wf-card">
               <div class="wf-row">
                 <label for="sel-breed">สายพันธุ์</label>
@@ -410,7 +494,7 @@
                 </select>
               </div>
               <div class="wf-row">
-                <label for="sel-weight">น้ำหนัก (กก.)</label>
+                <label for="sel-weight">น้ำหนัก (กิโลกรัม)</label>
                 <select id="sel-weight" class="wf-select" onchange="calcSelect()">
                   <option value="2">2</option>
                   <option value="4" selected>4</option>
@@ -421,71 +505,88 @@
                 </select>
               </div>
               <div class="wf-row">
-                <label for="sel-food">อาหาร (กรัม)</label>
-                <input id="sel-food" type="number" class="wf-input" style="width:96px;text-align:right;" value="345" min="50" max="2500" oninput="validateSelect()" />
+                <label for="sel-food">อาหาร (กรัมต่อวัน)</label>
+                <input id="sel-food" type="number" class="wf-input" style="width:140px;text-align:right;" value="345" min="50" max="2500" oninput="validateSelect()" />
               </div>
               <div class="wf-row">
                 <span>กำหนดเวลาเริ่มต้น</span>
-                <div style="display:flex;gap:6px;align-items:center;">
-                  <input id="sel-h" type="number" class="wf-input" style="width:54px;text-align:center;" value="6" min="0" max="23" oninput="validateSelect()" />
+                <div style="display:flex;gap:8px;align-items:center;">
+                  <input id="sel-h" type="number" class="wf-input" style="width:72px;text-align:center;" value="6" min="0" max="23" oninput="validateSelect()" />
                   <span>:</span>
-                  <input id="sel-m" type="number" class="wf-input" style="width:54px;text-align:center;" value="0" min="0" max="59" oninput="validateSelect()" />
+                  <input id="sel-m" type="number" class="wf-input" style="width:72px;text-align:center;" value="0" min="0" max="59" oninput="validateSelect()" />
                 </div>
               </div>
             </div>
+
             <div id="sel-err" class="poka-box" style="display:none;background:#e5e5e5;"></div>
             <button id="sel-save" class="wf-btn" onclick="saveSelect()">บันทึก</button>
           </div>
-          <div class="span-3"></div>
-          <div class="span-3 wf-box">พื้นที่ภาพประกอบด้านล่าง</div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="poka-box">
+              <strong>Poka-Yoke:</strong> บังคับช่วงปริมาณอาหาร 50–2,500 กรัม และเวลาเริ่มต้น 00–23 น. / 00–59 นาที หากกรอกเกินช่วงที่กำหนด ปุ่มบันทึกจะถูกปิดใช้งานทันทีเพื่อป้องกันความผิดพลาด
+            </div>
+            <div class="wf-box" style="min-height:180px;display:flex;align-items:center;justify-content:center;">
+              พื้นที่ภาพประกอบสุนัขและเม็ดอาหาร
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- ภาพ 6 (ก): หน้าหลัก -->
       <section id="s-home" class="screen">
-        <header class="app-header">
-          <span></span>
-          <span>หน้าหลัก</span>
-          <span></span>
-        </header>
-        <div class="stage-9">
-          <div class="span-3">
+        <div class="screen-head">
+          <h1 class="screen-title">หน้าหลัก</h1>
+        </div>
+
+        <div class="phi-grid">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div class="wf-card">
+              <div class="wf-card-head">ข้อมูลสุนัข</div>
               <div class="wf-row"><span>สายพันธุ์:</span><strong id="h-breed">ตุ๊กตา</strong></div>
               <div class="wf-row"><span>น้ำหนัก:</span><strong id="h-weight">4 กิโลกรัม</strong></div>
               <div class="wf-row"><span>ปริมาณอาหาร:</span><strong id="h-food">345 กรัมต่อวัน</strong></div>
             </div>
+
+            <div id="h-actions" class="btn-pair-phi">
+              <button class="wf-btn" onclick="openEdit()">แก้ไขข้อมูล</button>
+              <button class="wf-btn outline" onclick="toggleDeleteConfirm(true)">ลบข้อมูล</button>
+            </div>
+
+            <div id="h-del-confirm" class="poka-box" style="display:none;">
+              <p style="font-weight:600;margin-bottom:10px;">Poka-Yoke: ยืนยันการลบข้อมูลสุนัขและกลับไปหน้าแรกหรือไม่?</p>
+              <div class="btn-pair-phi">
+                <button class="wf-btn outline" onclick="toggleDeleteConfirm(false)">ยกเลิก</button>
+                <button class="wf-btn" onclick="confirmDelete()">ยืนยันลบข้อมูล</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div class="wf-card">
               <div class="wf-card-head">จ่ายอาหารอัตโนมัติ</div>
               <div class="wf-row"><span>ครั้งที่ 1:</span><strong id="h-m1">06.00</strong></div>
               <div class="wf-row"><span>ครั้งที่ 2:</span><strong id="h-m2">14.00</strong></div>
             </div>
-            <div id="h-actions" class="btn-pair-phi">
-              <button class="wf-btn" onclick="openEdit()">แก้ไขข้อมูล</button>
-              <button class="wf-btn outline" onclick="toggleDeleteConfirm(true)">ลบข้อมูล</button>
-            </div>
-            <div id="h-del-confirm" class="poka-box" style="display:none;margin-top:10px;">
-              <p style="font-weight:600;margin-bottom:8px;">Poka-Yoke: ยืนยันการลบข้อมูลหรือไม่?</p>
-              <div class="btn-pair-phi">
-                <button class="wf-btn outline" onclick="toggleDeleteConfirm(false)">ยกเลิก</button>
-                <button class="wf-btn" onclick="confirmDelete()">ยืนยันลบ</button>
-              </div>
+
+            <div class="wf-box" style="min-height:140px;display:flex;align-items:center;justify-content:center;">
+              พื้นที่ภาพประกอบสุนัขและเม็ดอาหาร
             </div>
           </div>
-          <div class="span-3"></div>
-          <div class="span-3 wf-box">พื้นที่ภาพประกอบด้านล่าง</div>
         </div>
       </section>
 
       <!-- ภาพ 6 (ข): แก้ไขข้อมูล -->
       <section id="s-edit" class="screen">
-        <header class="app-header">
-          <button class="back-btn" onclick="tryBackEdit()" aria-label="ย้อนกลับ">&#8592;</button>
-          <span>แก้ไขข้อมูล</span>
-          <span></span>
-        </header>
-        <div class="stage-9">
-          <div class="span-3">
+        <div class="screen-head">
+          <div class="screen-head-left">
+            <button class="back-btn" onclick="tryBackEdit()" aria-label="ย้อนกลับ">&#8592;</button>
+            <h1 class="screen-title">แก้ไขข้อมูล</h1>
+          </div>
+        </div>
+
+        <div class="phi-grid">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div class="wf-card">
               <div class="wf-row">
                 <label for="ed-breed">สายพันธุ์</label>
@@ -497,7 +598,7 @@
                 </select>
               </div>
               <div class="wf-row">
-                <label for="ed-weight">น้ำหนัก</label>
+                <label for="ed-weight">น้ำหนัก (กิโลกรัม)</label>
                 <select id="ed-weight" class="wf-select" onchange="dirtyEdit(true)">
                   <option value="2">2</option>
                   <option value="4" selected>4</option>
@@ -509,33 +610,37 @@
               </div>
               <div class="wf-row">
                 <label for="ed-food">อาหาร (กรัม)</label>
-                <input id="ed-food" type="number" class="wf-input" style="width:96px;text-align:right;" value="345" min="50" max="2500" oninput="dirtyEdit(false)" />
+                <input id="ed-food" type="number" class="wf-input" style="width:140px;text-align:right;" value="345" min="50" max="2500" oninput="dirtyEdit(false)" />
               </div>
             </div>
+
             <div id="ed-unsaved" class="poka-box" style="display:none;">
-              <p style="font-weight:600;margin-bottom:8px;">Poka-Yoke: มีข้อมูลที่ยังไม่บันทึก ต้องการออกหรือไม่?</p>
+              <p style="font-weight:600;margin-bottom:10px;">Poka-Yoke: มีข้อมูลที่ยังไม่บันทึก ต้องการออกจากหน้านี้หรือไม่?</p>
               <div class="btn-pair-phi">
                 <button class="wf-btn" onclick="document.getElementById('ed-unsaved').style.display='none'">แก้ไขต่อ</button>
-                <button class="wf-btn outline" onclick="discardEdit()">ละทิ้ง</button>
+                <button class="wf-btn outline" onclick="discardEdit()">ละทิ้งการแก้ไข</button>
               </div>
             </div>
+
             <button id="ed-save" class="wf-btn" onclick="saveEdit()">บันทึก</button>
           </div>
-          <div class="span-3"></div>
-          <div class="span-3 wf-box">พื้นที่ภาพประกอบด้านล่าง</div>
+
+          <div class="wf-box" style="min-height:220px;display:flex;align-items:center;justify-content:center;">
+            พื้นที่ภาพประกอบสุนัขและเม็ดอาหาร
+          </div>
         </div>
       </section>
 
       <!-- ภาพ 7 (ก): จ่ายอาหาร -->
       <section id="s-dispense" class="screen">
-        <header class="app-header">
-          <span></span>
-          <span>จ่ายอาหาร</span>
-          <span></span>
-        </header>
-        <div class="stage-9">
-          <div class="span-3">
+        <div class="screen-head">
+          <h1 class="screen-title">จ่ายอาหาร</h1>
+        </div>
+
+        <div class="phi-grid">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div class="wf-card">
+              <div class="wf-card-head">เลือกรูปแบบการจ่ายอาหาร</div>
               <label class="wf-row" style="cursor:pointer;">
                 <span>กำหนดเอง</span>
                 <input type="radio" name="dmode" checked onchange="setMode('manual')" />
@@ -546,104 +651,108 @@
               </label>
             </div>
 
-            <div id="box-manual" class="wf-card" style="padding:14px;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-                <span>ปริมาณที่ต้องการจ่าย</span>
-                <strong id="d-val">172 กรัม</strong>
+            <div id="box-manual" class="wf-card" style="padding:20px;display:flex;flex-direction:column;gap:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:15px;">ปริมาณที่ต้องการจ่าย</span>
+                <strong id="d-val" style="font-size:18px;">172 กรัม</strong>
               </div>
-              <input id="d-range" type="range" min="10" max="500" value="172" style="width:100%;accent-color:#171717;margin-bottom:10px;" oninput="updateDispense()" />
+              <input id="d-range" type="range" min="10" max="500" value="172" style="width:100%;accent-color:#171717;" oninput="updateDispense()" />
               <div id="d-warn" class="poka-box" style="display:none;">
-                Poka-Yoke: ปริมาณเกินอาหารแนะนำต่อวัน กรุณากดยืนยันเพื่อจ่าย
+                Poka-Yoke: ปริมาณนี้เกินอาหารแนะนำต่อวัน กรุณาตรวจสอบก่อนสั่งจ่าย
               </div>
               <button id="d-btn" class="wf-btn" onclick="dispenseNow()">สั่งจ่ายอาหาร</button>
             </div>
 
-            <div id="box-auto" class="wf-card" style="padding:14px;display:none;">
-              <p style="font-weight:600;margin-bottom:6px;">จ่ายอาหารตามเวลาอัตโนมัติ</p>
-              <p style="font-size:13px;color:#525252;margin-bottom:10px;">ตั้งค่าจ่ายวันละ 2 ครั้ง เวลา 06.00 น. และ 14.00 น.</p>
+            <div id="box-auto" class="wf-card" style="padding:20px;display:none;flex-direction:column;gap:12px;">
+              <p style="font-weight:600;font-size:16px;">จ่ายอาหารตามเวลาอัตโนมัติ</p>
+              <p style="font-size:14px;color:#525252;">ระบบทำงานวันละ 2 ครั้ง เวลา 06.00 น. และ 14.00 น. ตามที่ตั้งค่าไว้</p>
               <button class="wf-btn" onclick="toast('เปิดใช้งานโหมดอัตโนมัติแล้ว')">ยืนยันโหมดอัตโนมัติ</button>
             </div>
           </div>
-          <div class="span-3"></div>
-          <div class="span-3 wf-box">พื้นที่ภาพประกอบด้านล่าง</div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="poka-box">
+              <strong>Poka-Yoke:</strong> ระบบจะป้องกันการสั่งจ่ายเกินปริมาณอาหารที่เหลืออยู่ในถัง และแจ้งเตือนเมื่อปริมาณต่อครั้งสูงกว่าที่กำหนดต่อวัน
+            </div>
+            <div class="wf-box" style="min-height:180px;display:flex;align-items:center;justify-content:center;">
+              พื้นที่ภาพประกอบสุนัขและเม็ดอาหาร
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- ภาพ 7 (ข): ตรวจสอบอาหาร -->
       <section id="s-check" class="screen">
-        <header class="app-header">
-          <span></span>
-          <span>ตรวจสอบอาหาร</span>
-          <span></span>
-        </header>
-        <div class="stage-9">
-          <div class="span-3" style="text-align:center;">
-            <button class="wf-btn outline" style="width:140px;min-height:40px;margin-bottom:10px;" onclick="openHistory()">ประวัติ</button>
+        <div class="screen-head">
+          <h1 class="screen-title">ตรวจสอบอาหาร</h1>
+          <button class="topbar-action" onclick="openHistory()">ดูประวัติ</button>
+        </div>
 
-            <div class="wf-card">
-              <div class="wf-row"><span>ถังอาหารคงเหลือ</span><strong id="c-rem">6241 กรัม</strong></div>
-              <div class="wf-row"><span>ปริมาณอาหารคงเหลือ</span><strong id="c-used">1759 กรัม</strong></div>
-            </div>
-
-            <!-- สัดส่วน 1.618 (228 x 141) โทนขาว-ดำ -->
+        <div class="phi-grid">
+          <div class="hopper-panel">
+            <strong style="font-size:15px;">แบบจำลองถังและหลอดจ่ายอาหาร (สัดส่วน 1.618)</strong>
             <div class="hopper-tank">
-              <div id="c-pct" style="font-size:12px;font-weight:600;margin-bottom:6px;">78%</div>
+              <div id="c-pct" style="font-size:14px;font-weight:600;margin-bottom:8px;text-align:center;">78%</div>
               <div class="hopper-track">
                 <div id="c-bar" class="hopper-fill" style="height:78%;"></div>
               </div>
             </div>
 
             <div class="chute-tube">
-              <div style="font-size:11px;font-weight:600;margin-bottom:4px;">100%</div>
+              <div style="font-size:12px;font-weight:600;margin-bottom:6px;text-align:center;">100%</div>
               <div class="hopper-track">
                 <div class="hopper-fill" style="height:100%;"></div>
               </div>
             </div>
           </div>
-          <div class="span-3"></div>
-          <div class="span-3"></div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="wf-card">
+              <div class="wf-card-head">ปริมาณอาหารในระบบ</div>
+              <div class="wf-row"><span>ถังอาหารคงเหลือ</span><strong id="c-rem">6241 กรัม</strong></div>
+              <div class="wf-row"><span>ปริมาณอาหารคงเหลือ</span><strong id="c-used">1759 กรัม</strong></div>
+              <div class="wf-row"><span>ความจุถังทั้งหมด</span><strong>8000 กรัม</strong></div>
+            </div>
+
+            <button class="wf-btn outline" onclick="refillHopper()">เติมอาหารเต็มถัง (8,000 กรัม)</button>
+          </div>
         </div>
       </section>
 
       <!-- กล้อง -->
       <section id="s-camera" class="screen">
-        <header class="app-header">
-          <span></span>
-          <span>กล้อง</span>
-          <span></span>
-        </header>
-        <div class="stage-9">
-          <div class="span-3">
-            <div class="wf-box" style="height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;">
-              <strong>พื้นที่แสดงภาพกล้อง</strong>
-              <span>ชามอาหารจุดปล่อยที่ 1</span>
-            </div>
-            <button class="wf-btn" onclick="toast('บันทึกภาพชามอาหารเรียบร้อย')">ถ่ายภาพตรวจสอบ</button>
+        <div class="screen-head">
+          <h1 class="screen-title">กล้องตรวจสอบชามอาหาร</h1>
+        </div>
+
+        <div class="phi-grid">
+          <div class="wf-box" style="min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
+            <strong style="font-size:16px;color:#171717;">พื้นที่แสดงภาพกล้องสด</strong>
+            <span>จุดปล่อยอาหารที่ 1</span>
           </div>
-          <div class="span-3"></div>
-          <div class="span-3"></div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="wf-card">
+              <div class="wf-card-head">การควบคุมกล้อง</div>
+              <div class="wf-row"><span>สถานะจุดปล่อย</span><strong>จุดที่ 1</strong></div>
+              <div class="wf-row"><span>ภาพที่บันทึก</span><strong id="cam-count">0 ภาพ</strong></div>
+            </div>
+            <button class="wf-btn" onclick="captureCamera()">ถ่ายภาพตรวจสอบ</button>
+          </div>
         </div>
       </section>
-
-      <!-- Bottom Navigation -->
-      <nav id="bnav" class="bottom-nav" style="display:none;">
-        <button class="nav-item active" data-t="home" onclick="go('home')">หน้าหลัก</button>
-        <button class="nav-item" data-t="dispense" onclick="go('dispense')">จ่ายอาหาร</button>
-        <button class="nav-item" data-t="check" onclick="go('check')">ตรวจสอบอาหาร</button>
-        <button class="nav-item" data-t="camera" onclick="go('camera')">กล้อง</button>
-      </nav>
-
-      <!-- History Modal -->
-      <div id="hist-modal" class="modal-backdrop">
-        <div class="modal-card">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;margin-bottom:8px;border-bottom:1.5px solid #171717;">
-            <strong>ประวัติการจ่ายอาหาร</strong>
-            <button onclick="document.getElementById('hist-modal').classList.remove('open')" style="width:32px;height:32px;border:1px solid #171717;background:#fff;cursor:pointer;">&times;</button>
-          </div>
-          <div id="hist-list"></div>
-        </div>
-      </div>
     </main>
+
+    <!-- History Modal -->
+    <div id="hist-modal" class="modal-backdrop">
+      <div class="modal-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;margin-bottom:10px;border-bottom:1.5px solid #171717;">
+          <strong style="font-size:16px;">ประวัติการจ่ายอาหาร</strong>
+          <button onclick="document.getElementById('hist-modal').classList.remove('open')" style="width:36px;height:36px;border:1.5px solid #171717;background:#fff;cursor:pointer;font-size:18px;">&times;</button>
+        </div>
+        <div id="hist-list"></div>
+      </div>
+    </div>
 
     <script>
       const CAP = 8000;
@@ -655,6 +764,7 @@
         m2: '14.00',
         remain: 6241,
         dirty: false,
+        camCount: 0,
         logs: [
           { time: 'วันนี้ 14:00 น.', mode: 'อัตโนมัติ', grams: 173 },
           { time: 'วันนี้ 06:00 น.', mode: 'อัตโนมัติ', grams: 172 }
@@ -664,10 +774,8 @@
       function go(id) {
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('s-' + id).classList.add('active');
-        const nav = document.getElementById('bnav');
-        nav.style.display = ['home', 'edit', 'dispense', 'check', 'camera'].includes(id) ? 'grid' : 'none';
-        document.querySelectorAll('.nav-item').forEach(btn => {
-          const t = btn.getAttribute('data-t');
+        document.querySelectorAll('.nav-tab').forEach(btn => {
+          const t = btn.getAttribute('data-tab');
           btn.classList.toggle('active', t === id || (id === 'edit' && t === 'home'));
         });
       }
@@ -777,8 +885,8 @@
       }
 
       function setMode(m) {
-        document.getElementById('box-manual').style.display = m === 'manual' ? 'block' : 'none';
-        document.getElementById('box-auto').style.display = m === 'auto' ? 'block' : 'none';
+        document.getElementById('box-manual').style.display = m === 'manual' ? 'flex' : 'none';
+        document.getElementById('box-auto').style.display = m === 'auto' ? 'flex' : 'none';
       }
 
       function updateDispense() {
@@ -788,24 +896,41 @@
         document.getElementById('d-btn').disabled = v > app.remain || v <= 0;
       }
 
-      function dispenseNow() {
-        const v = Number(document.getElementById('d-range').value);
-        if (v > app.remain) return;
-        app.remain -= v;
+      function syncHopper() {
         const pct = Math.round((app.remain / CAP) * 100);
         document.getElementById('c-rem').textContent = app.remain + ' กรัม';
         document.getElementById('c-used').textContent = (CAP - app.remain) + ' กรัม';
         document.getElementById('c-pct').textContent = pct + '%';
         document.getElementById('c-bar').style.height = pct + '%';
+      }
+
+      function dispenseNow() {
+        const v = Number(document.getElementById('d-range').value);
+        if (v > app.remain) return;
+        app.remain -= v;
+        syncHopper();
         app.logs.unshift({ time: 'เมื่อสักครู่', mode: 'กำหนดเอง', grams: v });
         updateDispense();
         toast('จ่ายอาหาร ' + v + ' กรัม แล้ว');
       }
 
+      function refillHopper() {
+        app.remain = CAP;
+        syncHopper();
+        updateDispense();
+        toast('เติมอาหารเต็มถัง 8,000 กรัม แล้ว');
+      }
+
+      function captureCamera() {
+        app.camCount += 1;
+        document.getElementById('cam-count').textContent = app.camCount + ' ภาพ';
+        toast('บันทึกภาพชามอาหารเรียบร้อย');
+      }
+
       function openHistory() {
         document.getElementById('hist-list').innerHTML = app.logs.map(l =>
-          '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e5e5e5;font-size:13px;">' +
-          '<div><strong>' + l.mode + '</strong><div style="font-size:11px;color:#525252;">' + l.time + '</div></div>' +
+          '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #d4d4d4;font-size:14px;">' +
+          '<div><strong>' + l.mode + '</strong><div style="font-size:12px;color:#525252;">' + l.time + '</div></div>' +
           '<strong>' + l.grams + ' กรัม</strong></div>'
         ).join('');
         document.getElementById('hist-modal').classList.add('open');
@@ -815,7 +940,7 @@
         const t = document.getElementById('toast');
         t.textContent = msg;
         t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 2000);
+        setTimeout(() => t.classList.remove('show'), 2200);
       }
     </script>
   </body>
